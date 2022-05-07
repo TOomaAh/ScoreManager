@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Score Manager</string>
+    <string name="new_game_btn">New Game</string>
+    <string name="history_btn">Load History</string>
+    <string name="add_player_btn">Add player</string>
+    <string name="player_number_text">Player X</string>
 </resources>
