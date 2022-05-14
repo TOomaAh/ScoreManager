@@ -4,4 +4,8 @@
     <string name="history_btn">Load History</string>
     <string name="add_player_btn">Add player</string>
     <string name="player_number_text">Player X</string>
+    <string name="continue_btn">Continue</string>
+    <string name="strike_str">Strike</string>
+    <string name="spare_str">Spare</string>
+    <string name="hole_str">Hole</string>
 </resources>
