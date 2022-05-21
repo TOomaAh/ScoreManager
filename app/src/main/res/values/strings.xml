@@ -8,4 +8,5 @@
     <string name="strike_str">Strike</string>
     <string name="spare_str">Spare</string>
     <string name="hole_str">Hole</string>
+    <string name="player_name_hint">Player Name</string>
 </resources>
