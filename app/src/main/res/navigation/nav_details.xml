@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.esgi.scoremanager.fragments.MenuFragment"
-        android:label="MenuFragment" />
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_gameSetupFragment"
+            app:destination="@id/gameSetupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameSetupFragment"
+        android:name="com.esgi.scoremanager.fragments.GameSetupFragment"
+        android:label="GameSetupFragment" />
 </navigation>
