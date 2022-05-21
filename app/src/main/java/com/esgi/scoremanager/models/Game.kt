@@ -1,6 +1,8 @@
 package com.esgi.scoremanager.models
 
-abstract class Game(private val sport: Sport) {
+import java.util.*
+
+abstract class Game(private val sport: Sport, private val date: Date) {
 
 
 }

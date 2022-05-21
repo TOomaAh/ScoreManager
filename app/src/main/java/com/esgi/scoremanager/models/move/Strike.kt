@@ -6,5 +6,6 @@ class Strike : Move {
 
     constructor() : super("Strike", 10)
 
-    override fun canContinue(): Boolean = false
+    override fun canRepeat(): Boolean = true
+
 }
