@@ -24,30 +24,18 @@
 
         <EditText
             android:id="@+id/player_name_input"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/player_name_input"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/player_add_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
             android:autofillHints="Player name"
+            android:hint="@string/player_name_hint"
             android:inputType="text"
-            android:hint="Player Name"
-            tools:ignore="LabelFor"
-            />
-
-        <Button
-            android:id="@+id/player_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_player_btn"
-            app:layout_constraintTop_toBottomOf="@id/player_number_input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/player_name_input"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_name_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="LabelFor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

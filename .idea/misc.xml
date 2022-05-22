@@ -3,7 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/brune/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/activity_main.xml" value="0.16530797101449277" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3675" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_game_setup.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_history.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_menu.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_score.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/history_score_cell.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/item_player.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/score_grid.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/score_grid_number.xml" value="0.2734375" />
+        <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/score_history_player.xml" value="0.28177083333333336" />
       </map>
     </option>
   </component>
