@@ -2,4 +2,12 @@ package com.esgi.scoremanager.models.entities
 
 import com.esgi.scoremanager.models.Entity
 
-class Team(val name : String, val players : MutableList<Player> ) : Entity(name) {}
+class Team(private var name : String, val players : MutableList<Player> ) : Entity(name) {
+    override fun setName(name: String){
+        this.name = name
+    }
+
+    override fun getName() : String {
+        return this.name
+    }
+}
