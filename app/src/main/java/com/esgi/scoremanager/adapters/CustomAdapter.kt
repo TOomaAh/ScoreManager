@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
@@ -29,8 +30,8 @@ class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.A
 
         val playerNbrLabel: TextView = view.player_number_input
         val playerNameInput: EditText = view.player_name_input
-        init {
-        }
+        val playerBtn : Button = view.button_delete_player
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,6 +56,16 @@ class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.A
             override fun afterTextChanged(s: Editable?) {}
 
         })
+
+        if (entities.size == 1) {
+            viewHolder.playerBtn.visibility = View.INVISIBLE
+        }else {
+            viewHolder.playerBtn.setOnClickListener {
+                entities.removeAt(position)
+                this.notifyDataSetChanged()
+            }
+        }
+
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         //viewHolder.playerNameInput
