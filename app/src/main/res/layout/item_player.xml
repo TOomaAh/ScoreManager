@@ -10,6 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="X"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/player_number_input"
+            android:id="@+id/button_delete_player"
+            />
+
         <TextView
             android:id="@+id/player_number_input"
             android:textSize="20sp"
