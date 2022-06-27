@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CursorAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.adapters.CustomAdapter
@@ -45,9 +46,8 @@ class GameSetupFragment : Fragment() {
         }
 
         continueBtn.setOnClickListener {
-            for (i in entities) {
-                Log.d("PLAYERRRRRRRRR", i.getName())
-            }
+            val action =  GameSetupFragmentDirections.actionGameSetupFragmentToScoreFragment()
+            findNavController().navigate(action)
         }
     }
 }
