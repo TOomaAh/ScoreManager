@@ -1,10 +1,11 @@
 package com.esgi.scoremanager.models
 
 abstract class Sport(
-    protected val name: String,
-    protected val entity: MutableList<Entity>,
-    protected val rounds: List<Round>,
-    protected val nbrRound: Int) {
+    val name: String,
+    val entity: MutableList<Entity>,
+    val rounds: List<Round>,
+    var nbrRound: Int
+    ) {
 
     abstract fun getRule(): String
 

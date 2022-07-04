@@ -1,5 +1,6 @@
 package com.esgi.scoremanager.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.adapters.ScoreGridAdapter
 import com.esgi.scoremanager.models.Bowling
+import com.esgi.scoremanager.models.Entity
+import com.esgi.scoremanager.models.entities.Player
+import com.esgi.scoremanager.models.move.Other
+import com.esgi.scoremanager.models.move.Spare
+import com.esgi.scoremanager.models.move.Strike
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
+import kotlin.math.absoluteValue
 
 class ScoreFragment : Fragment() {
 
@@ -31,15 +38,47 @@ class ScoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val entities = ScoreFragmentArgs.fromBundle(requireArguments()).entities
-        for (i in entities) {
-            Log.d("PROUT", i.toString())
+        val entities : Array<Entity> = ScoreFragmentArgs.fromBundle(requireArguments()).entities
+        var players = mutableListOf<Player>()
+        for (player in entities){
+            players.add(player as Player)
         }
-        Bowling.getInstance()
+        Bowling.nbrRound = Bowling.nbrRound * entities.size
         view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
         val adapter = ScoreGridAdapter(numbers = scoresNumber);
         view.recycler_score_grid.adapter = adapter
         adapter.notifyDataSetChanged()
+        var currentRound = 0
+        val throwsPerRound = 2
+        while (currentRound < Bowling.nbrRound){
+            for (player in players){
+                player_str.text = player.nameEntity
+                var currentThrow = 0
+                while (currentThrow < throwsPerRound) {
+                    string_round.text = "Throw n°${currentThrow+1}"
+                    if (currentThrow == 0){
+                        strike_btn.visibility = View.VISIBLE
+                        spare_btn.visibility = View.GONE
+                        strike_btn.setOnClickListener {
+                            player.moves.add(Strike())
+                            currentThrow++
+                        }
+                    }else if (currentThrow == 1){
+                        spare_btn.visibility = View.VISIBLE
+                        strike_btn.visibility = View.GONE
+                        spare_btn.setOnClickListener {
+                            player.moves.add(Spare())
+                            currentThrow++
+                        }
+                    }
+                    hole_btn.setOnClickListener {
+                        player.moves.add(Other(0))
+                        currentThrow++
+                    }
+                }
+            }
+            currentRound++
+        }
 
         //La j'ai mis la liste en dure en haut mais faut calculer en fonction du score les resutlats possible
         //Si y'a toutes les quilles c'est de 1 à 9

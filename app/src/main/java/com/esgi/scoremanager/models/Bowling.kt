@@ -21,4 +21,5 @@ object Bowling : Sport("Bowling", mutableListOf(), listOf(), 10) {
 
 
 
+
 }
