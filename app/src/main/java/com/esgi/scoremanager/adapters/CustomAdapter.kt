@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.models.Bowling
 import com.esgi.scoremanager.models.Entity
+import com.esgi.scoremanager.models.entities.Player
 import kotlinx.android.synthetic.main.item_player.view.*
 
 class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
@@ -50,7 +51,9 @@ class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.A
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                entities[position].setName(viewHolder.playerNameInput.text.toString())
+
+                entities[position].nameEntity = viewHolder.playerNameInput.text.toString()
+                Log.d("TAG", "onTextChanged: ${entities[position]}")
             }
 
             override fun afterTextChanged(s: Editable?) {}

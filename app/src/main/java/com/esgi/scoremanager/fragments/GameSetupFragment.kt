@@ -40,7 +40,7 @@ class GameSetupFragment : Fragment() {
         val continueBtn = view.continue_btn
 
         addPlayerBtn.setOnClickListener {
-            entities.add(Player("", mutableListOf()))
+            entities.add(Player(""))
             adapter.notifyDataSetChanged()
 
         }

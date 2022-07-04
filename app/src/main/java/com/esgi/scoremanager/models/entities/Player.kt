@@ -5,12 +5,6 @@ import com.esgi.scoremanager.models.Move
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Player(private var name: String, val moves : MutableList<Move>) : Entity(name) {
-    override fun setName(name: String){
-        this.name = name
-    }
+class Player(var name: String, val moves : MutableList<Move> = mutableListOf()) : Entity(name) {
 
-    override fun getName() : String {
-        return this.name
-    }
 }
