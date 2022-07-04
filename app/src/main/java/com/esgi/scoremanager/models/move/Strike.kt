@@ -1,11 +1,9 @@
 package com.esgi.scoremanager.models.move
 
 import com.esgi.scoremanager.models.Move
+import kotlinx.android.parcel.Parcelize
 
-class Strike : Move {
-
-    constructor() : super("Strike", 10)
-
+@Parcelize
+class Strike : Move("Strike", 20) {
     override fun canRepeat(): Boolean = true
-
 }

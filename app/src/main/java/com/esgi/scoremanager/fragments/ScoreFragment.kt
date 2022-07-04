@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_score.view.*
 
 class ScoreFragment : Fragment() {
 
-    val scoresNumber : MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    val scoresNumber : MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
     val scoresView : MutableList<View> = mutableListOf()
 
 
@@ -31,6 +31,10 @@ class ScoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val entities = ScoreFragmentArgs.fromBundle(requireArguments()).entities
+        for (i in entities) {
+            Log.d("PROUT", i.toString())
+        }
         Bowling.getInstance()
         view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
         val adapter = ScoreGridAdapter(numbers = scoresNumber);

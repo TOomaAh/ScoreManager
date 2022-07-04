@@ -1,11 +1,10 @@
 package com.esgi.scoremanager.models.move
 
 import com.esgi.scoremanager.models.Move
+import kotlinx.android.parcel.Parcelize
 
-class Other : Move {
-
-    constructor() : super("Other", 10)
-
+@Parcelize
+class Other : Move("Other", 10) {
     override fun canRepeat(): Boolean = false
 
 }

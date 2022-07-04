@@ -46,7 +46,7 @@ class GameSetupFragment : Fragment() {
         }
 
         continueBtn.setOnClickListener {
-            val action =  GameSetupFragmentDirections.actionGameSetupFragmentToScoreFragment()
+            val action =  GameSetupFragmentDirections.actionGameSetupFragmentToScoreFragment(entities = entities.toTypedArray())
             findNavController().navigate(action)
         }
     }
