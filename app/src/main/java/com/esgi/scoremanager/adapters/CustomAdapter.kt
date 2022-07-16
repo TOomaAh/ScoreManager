@@ -12,9 +12,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.scoremanager.R
-import com.esgi.scoremanager.models.Entity
-import com.esgi.scoremanager.models.sport.Bowling
-import com.esgi.scoremanager.models.sport.Sport
 import com.esgi.scoremanager.models.sport.SportBuilder
 import kotlinx.android.synthetic.main.item_player.view.*
 
@@ -52,7 +49,7 @@ class CustomAdapter(private val bowling : SportBuilder) : RecyclerView.Adapter<C
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                bowling.entities[position].nameEntity = viewHolder.playerNameInput.text.toString()
+                bowling.entities[position].name = viewHolder.playerNameInput.text.toString()
                 Log.d("TAG", "onTextChanged: ${bowling.entities[position]}")
             }
 

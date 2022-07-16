@@ -1,20 +1,16 @@
 package com.esgi.scoremanager.models.sport
 
-import com.esgi.scoremanager.models.Entity
-import com.esgi.scoremanager.models.rounds.RoundsIterator
-import kotlinx.android.parcel.Parcelize
+import android.os.Parcelable
+import com.esgi.scoremanager.models.entities.Player
 
-@Parcelize
+
 abstract class Sport(
-    val name: String,
-    val entity: MutableList<Entity>,
-    val rounds: RoundsIterator,
-    ) {
+    val sportName: String,
+    val entity: MutableList<Player>
+    ) : Parcelable {
 
     abstract fun getRule(): String
 
-    fun addEntity(entity: Entity) = this.entity.add(entity)
-    fun getRoundPlayed(): Int = this.rounds.index
-    fun isLastRound(): Boolean = this.rounds.index == this.rounds.maxRounds
+    fun addEntity(entity: Player) = this.entity.add(entity)
 
 }

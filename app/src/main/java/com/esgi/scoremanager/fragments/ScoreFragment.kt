@@ -8,21 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.scoremanager.R
-import com.esgi.scoremanager.adapters.ScoreGridAdapter
-import com.esgi.scoremanager.models.sport.Bowling
-import com.esgi.scoremanager.models.Entity
+import com.esgi.scoremanager.models.Move
 import com.esgi.scoremanager.models.entities.Player
-import com.esgi.scoremanager.models.move.Other
-import com.esgi.scoremanager.models.move.Spare
+import com.esgi.scoremanager.models.iterator.rounds.Rounds
+import com.esgi.scoremanager.models.iterator.rounds.RoundsIterator
 import com.esgi.scoremanager.models.move.Strike
+import com.esgi.scoremanager.models.sport.Bowling
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
 
 class ScoreFragment : Fragment() {
 
-    val scoresNumber : MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    val scoresView : MutableList<View> = mutableListOf()
-
+    private var bowling : Bowling? = null
+    private var roundsIndex : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,48 +33,16 @@ class ScoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val entities : Array<Entity> = ScoreFragmentArgs.fromBundle(requireArguments()).entities
-        var players = mutableListOf<Player>()
-        for (player in entities){
-            players.add(player as Player)
-        }
-        Bowling.nbrRound = Bowling.nbrRound * entities.size
-        view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = ScoreGridAdapter(numbers = scoresNumber);
-        view.recycler_score_grid.adapter = adapter
-        adapter.notifyDataSetChanged()
-        var currentRound = 0
-        val throwsPerRound = 2
-        while (currentRound < Bowling.nbrRound){
-            for (player in players){
-                player_str.text = player.nameEntity
-                var currentThrow = 0
-                while (currentThrow < throwsPerRound) {
-                    string_round.text = "Throw n°${currentThrow+1}"
-                    if (currentThrow == 0){
-                        strike_btn.visibility = View.VISIBLE
-                        spare_btn.visibility = View.GONE
-                        strike_btn.setOnClickListener {
-                            player.moves.add(Strike())
-                            currentThrow++
-                        }
-                    }else if (currentThrow == 1){
-                        spare_btn.visibility = View.VISIBLE
-                        strike_btn.visibility = View.GONE
-                        spare_btn.setOnClickListener {
-                            player.moves.add(Spare())
-                            currentThrow++
-                        }
-                    }
-                    hole_btn.setOnClickListener {
-                        player.moves.add(Other(0))
-                        currentThrow++
-                    }
-                }
-            }
-            currentRound++
-        }
+        bowling = ScoreFragmentArgs.fromBundle(requireArguments()).bowling.build() as Bowling
 
+        bowling?.addRound(Rounds(bowling?.entities!!))
+        val round : Rounds = bowling?.rounds?.get(roundsIndex)!! as Rounds
+        val player: Player = this.bowling?.entities?.get(round.currentPlayerIndex)!!
+        player_str.text = player.name
+
+        string_round.text = player.formatCurrentThrowsIndex()
+
+        view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
         //La j'ai mis la liste en dure en haut mais faut calculer en fonction du score les resutlats possible
         //Si y'a toutes les quilles c'est de 1 à 9
         //Si le mec a fait 7 avant -> il faut afficher 1 et 2. 3 ca voudrait dire spare
@@ -89,7 +55,7 @@ class ScoreFragment : Fragment() {
         //Quand tous les round sont finis -> 10eme tours ou game.sport.round.size -> Ecran des score final (historique quoi)
 
         strike_btn.setOnClickListener {
-            Log.d("PROUT", "STRIKE")
+            play(Strike())
         }
 
         spare_btn.setOnClickListener {
@@ -101,5 +67,24 @@ class ScoreFragment : Fragment() {
         }
 
 
+    }
+
+    private fun play(move: Move) {
+        var rounds: Rounds = bowling?.rounds?.get(index = roundsIndex) as Rounds
+        val player: Player = rounds.players[rounds.currentPlayerIndex]
+        player.addMove(move)
+        Log.d("TAG", "player: $player")
+        Log.d("TAG", "player: $rounds")
+        if (!move.canRepeat() || player.getCurrentThrowsIndex() == 2) {
+            rounds.currentPlayerIndex += 1
+
+            if (rounds.currentPlayerIndex >= rounds.players.size) {
+                bowling?.rounds?.addItem(Rounds(bowling?.entities!!))
+                roundsIndex += 1
+                rounds = bowling?.rounds?.get(index = roundsIndex) as Rounds
+            }
+            player_str.text = rounds.players[rounds.currentPlayerIndex].name
+        }
+        //rounds.players[bowling.c]
     }
 }

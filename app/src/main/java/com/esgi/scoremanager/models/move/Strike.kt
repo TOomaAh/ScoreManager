@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Strike : Move("Strike", 20) {
-    override fun canRepeat(): Boolean = true
+    override fun canRepeat(): Boolean = false
 }
