@@ -23,9 +23,5 @@
     <fragment
         android:id="@+id/scoreFragment"
         android:name="com.esgi.scoremanager.fragments.ScoreFragment"
-        android:label="ScoreFragment" >
-        <argument
-            android:name="entities"
-            app:argType="com.esgi.scoremanager.models.Entity[]" />
-    </fragment>
+        android:label="ScoreFragment" />
 </navigation>

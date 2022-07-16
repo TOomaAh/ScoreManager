@@ -15,11 +15,12 @@ import com.esgi.scoremanager.adapters.CustomAdapter
 import com.esgi.scoremanager.models.Entity
 import com.esgi.scoremanager.models.Move
 import com.esgi.scoremanager.models.entities.Player
+import com.esgi.scoremanager.models.sport.SportBuilder
 import kotlinx.android.synthetic.main.fragment_game_setup.view.*
 
 class GameSetupFragment : Fragment() {
 
-    private val entities : MutableList<Entity> = mutableListOf<Entity>()
+    private val bowling : SportBuilder = SportBuilder()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,22 +32,22 @@ class GameSetupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        entities.add(Player("", mutableListOf()))
+        bowling.addEntity(Player(""))
         view.recycler_player.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = CustomAdapter(entities)
+        val adapter = CustomAdapter(bowling)
         view.recycler_player.adapter = adapter
 
         val addPlayerBtn = view.add_player_btn
         val continueBtn = view.continue_btn
 
         addPlayerBtn.setOnClickListener {
-            entities.add(Player(""))
+            bowling.addEntity(Player(""))
             adapter.notifyDataSetChanged()
 
         }
 
         continueBtn.setOnClickListener {
-            val action =  GameSetupFragmentDirections.actionGameSetupFragmentToScoreFragment(entities = entities.toTypedArray())
+            val action =  GameSetupFragmentDirections.actionGameSetupFragmentToScoreFragment()
             findNavController().navigate(action)
         }
     }

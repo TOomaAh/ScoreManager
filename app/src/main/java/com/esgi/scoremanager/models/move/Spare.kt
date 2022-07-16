@@ -5,8 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Spare : Move("Spare", 10) {
-
     override fun canRepeat(): Boolean = true
-
-
 }

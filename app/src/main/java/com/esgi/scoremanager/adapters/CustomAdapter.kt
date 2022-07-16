@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.scoremanager.R
-import com.esgi.scoremanager.models.Bowling
 import com.esgi.scoremanager.models.Entity
-import com.esgi.scoremanager.models.entities.Player
+import com.esgi.scoremanager.models.sport.Bowling
+import com.esgi.scoremanager.models.sport.Sport
+import com.esgi.scoremanager.models.sport.SportBuilder
 import kotlinx.android.synthetic.main.item_player.view.*
 
-class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private val bowling : SportBuilder) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -52,19 +52,19 @@ class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.A
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                entities[position].nameEntity = viewHolder.playerNameInput.text.toString()
-                Log.d("TAG", "onTextChanged: ${entities[position]}")
+                bowling.entities[position].nameEntity = viewHolder.playerNameInput.text.toString()
+                Log.d("TAG", "onTextChanged: ${bowling.entities[position]}")
             }
 
             override fun afterTextChanged(s: Editable?) {}
 
         })
 
-        if (entities.size == 1) {
+        if (bowling.entities.size == 1) {
             viewHolder.playerBtn.visibility = View.INVISIBLE
         }else {
             viewHolder.playerBtn.setOnClickListener {
-                entities.removeAt(position)
+                bowling.entities.removeAt(position)
                 this.notifyDataSetChanged()
             }
         }
@@ -76,6 +76,6 @@ class CustomAdapter(private val entities : MutableList<Entity>) : RecyclerView.A
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = entities.size
+    override fun getItemCount() = bowling.entities.size
 
 }

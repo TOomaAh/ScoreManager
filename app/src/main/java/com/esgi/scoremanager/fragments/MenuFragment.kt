@@ -1,15 +1,13 @@
 package com.esgi.scoremanager.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.esgi.scoremanager.R
-import com.esgi.scoremanager.models.Bowling
-import com.esgi.scoremanager.models.entities.Player
+import com.esgi.scoremanager.models.sport.Bowling
 import kotlinx.android.synthetic.main.fragment_menu.view.*
 
 class MenuFragment : Fragment() {
@@ -25,7 +23,6 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.new_game_btn.setOnClickListener {
-            Bowling.getInstance()
             val action = MenuFragmentDirections.actionMenuFragmentToGameSetupFragment()
             findNavController().navigate(action)
         }

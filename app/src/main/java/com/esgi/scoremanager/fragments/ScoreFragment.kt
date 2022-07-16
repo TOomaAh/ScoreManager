@@ -1,17 +1,15 @@
 package com.esgi.scoremanager.fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.adapters.ScoreGridAdapter
-import com.esgi.scoremanager.models.Bowling
+import com.esgi.scoremanager.models.sport.Bowling
 import com.esgi.scoremanager.models.Entity
 import com.esgi.scoremanager.models.entities.Player
 import com.esgi.scoremanager.models.move.Other
@@ -19,7 +17,6 @@ import com.esgi.scoremanager.models.move.Spare
 import com.esgi.scoremanager.models.move.Strike
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
-import kotlin.math.absoluteValue
 
 class ScoreFragment : Fragment() {
 
