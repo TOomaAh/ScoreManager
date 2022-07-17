@@ -49,17 +49,6 @@ class ScoreFragment : Fragment() {
         string_round.text = player.formatCurrentThrowsIndex()
 
         view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
-        //La j'ai mis la liste en dure en haut mais faut calculer en fonction du score les resutlats possible
-        //Si y'a toutes les quilles c'est de 1 à 9
-        //Si le mec a fait 7 avant -> il faut afficher 1 et 2. 3 ca voudrait dire spare
-        //Je comprends pas pourquoi y'a que 1 chiffre qui apparait
-        //Faut cacher le bouton du spare si c'est le premier lancer. -> tu ne peux que Strike ou Hole au 1er
-        //Faut cacher le bouton du strike au deuxieme lancer -> tu ne peux que Spare ou Hole au 2eme
-        //Dans l'adapateur tu peux gérer le onclick des boutons de score en bas.
-        //Dans l'idée un joueur a 2 lancer donc au deuxieme lancer -> R.id.string_round.text = "2nd throw"
-        //Quand un joueur a fait ses deux lancer ou un strike, meme écran mais pour le j2, j3 etc ...
-        //Quand tous les round sont finis -> 10eme tours ou game.sport.round.size -> Ecran des score final (historique quoi)
-
         strike_btn.setOnClickListener {
             play(Strike())
         }
@@ -80,25 +69,22 @@ class ScoreFragment : Fragment() {
         var rounds: Rounds = bowling?.rounds?.getCurrent() as Rounds
 
         if (bowling?.rounds!!.isLast() && rounds.currentPlayerIndex == rounds.players.size - 1){
+             val game : Game = Game(
+                 id         = 0,
+                 name       = bowling?.name!!,
+                 rounds     = bowling?.rounds!!.toList(),
+                 players    = bowling?.entities!!
+            )
+            Log.d("TAG", "play: $game")
 
-            AlertDialog.Builder(this.context).setMessage("Save this game ?").setPositiveButton("Yes") { dialogInterface, i ->
-                val game : Game = Game(
-                    0,
-                    bowling?.name!!,
-                    bowling?.rounds!!.toList()
-                )
-                GameDatabase.getDatabase(this.context!!).gameDao().insertGame(game)
-                dialogInterface.dismiss()
-            }.setNegativeButton("No") { alert, _ ->
-                findNavController().popBackStack()
-                alert.dismiss()
-            }.show()
-
+            val action =  ScoreFragmentDirections.actionScoreFragmentToGameRecapFragment(game)
+            findNavController().navigate(action)
             return
 
 
         }
         val player: Player = rounds.players[rounds.currentPlayerIndex]
+        Log.d("TAG", "play: ${player.name}")
         val canAddMove = player.addMove(move)
         if (!canAddMove) {
             Log.d("TAG", "play: $canAddMove")

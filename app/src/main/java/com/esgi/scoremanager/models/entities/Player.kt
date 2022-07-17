@@ -11,16 +11,20 @@ import kotlin.jvm.Throws
 
 class Player(
     @ColumnInfo var name: String,
+    @ColumnInfo var moves: MutableList<Move> = mutableListOf(),
     private val maxMove: Int) : Parcelable {
 
-    @ColumnInfo private var moves: MutableList<Move> = mutableListOf()
+
     private var currentThrows: Int = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
+        mutableListOf<Move>(),
         parcel.readInt()
     ) {
+        currentThrows = parcel.readInt()
     }
+
 
     fun resetAll() {
         currentThrows = 0
@@ -50,8 +54,13 @@ class Player(
         return true
     }
 
+
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
+        parcel.writeList(moves)
+        parcel.writeInt(maxMove)
+        parcel.writeInt(currentThrows)
     }
 
     override fun describeContents(): Int {
@@ -59,7 +68,7 @@ class Player(
     }
 
     override fun toString(): String {
-        return "Player(name='$name', currentThrows=$currentThrows)"
+        return "Player(name='$name', moves=$moves, maxMove=$maxMove, currentThrows=$currentThrows)"
     }
 
     companion object CREATOR : Parcelable.Creator<Player> {
@@ -71,7 +80,6 @@ class Player(
             return arrayOfNulls(size)
         }
     }
-
 
 
 }

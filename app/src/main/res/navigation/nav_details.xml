@@ -27,5 +27,16 @@
         <argument
             android:name="bowling"
             app:argType="com.esgi.scoremanager.models.sport.SportBuilder" />
+        <action
+            android:id="@+id/action_scoreFragment_to_gameRecapFragment"
+            app:destination="@id/gameRecapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameRecapFragment"
+        android:name="com.esgi.scoremanager.fragments.GameRecapFragment"
+        android:label="GameRecapFragment" >
+        <argument
+            android:name="game"
+            app:argType="com.esgi.scoremanager.models.Game" />
     </fragment>
 </navigation>
