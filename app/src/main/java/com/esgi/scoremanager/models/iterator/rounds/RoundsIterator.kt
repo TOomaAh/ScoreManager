@@ -2,11 +2,10 @@ package com.esgi.scoremanager.models.iterator.rounds
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import com.esgi.scoremanager.models.iterator.Iterator
-import com.esgi.scoremanager.models.iterator.IteratorITem
-import kotlinx.android.parcel.Parcelize
 
-class RoundsIterator(val maxRounds: Int):
+class RoundsIterator(private val maxRounds: Int):
     Iterator, Parcelable  {
     private val rounds: MutableList<Rounds?> = MutableList(maxRounds) { null }
     var index: Int = 0
@@ -15,7 +14,16 @@ class RoundsIterator(val maxRounds: Int):
         index = parcel.readInt()
     }
 
-    override fun get(index: Int): IteratorITem? {
+    override fun toList(): List<Rounds?> {
+        return this.rounds.toList()
+    }
+
+    override fun isLast(): Boolean {
+        Log.d("TAG", "isLast: index => $index | max => $maxRounds == ${index == maxRounds - 1}")
+        return index == maxRounds - 1
+    }
+
+    override fun getCurrent(): Rounds? {
         return this.rounds[index]
     }
 
@@ -39,13 +47,15 @@ class RoundsIterator(val maxRounds: Int):
         this.index = 0
     }
 
-    override fun addItem(item: IteratorITem) {
-        val rounds: Rounds = item as Rounds
-        rounds.players.map {
-            it.resetThrow()
+    override fun addItem(item: Rounds) {
+        val rounds: Rounds = item
+        if (this.rounds[0] == null){
+            this.rounds[0] = rounds
+            return
         }
-        this.rounds[index] = rounds
         index += 1
+        this.rounds[index] = rounds
+
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

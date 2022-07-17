@@ -3,16 +3,17 @@ package com.esgi.scoremanager.models.entities
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
+import androidx.room.ColumnInfo
 import com.esgi.scoremanager.models.Move
-import com.esgi.scoremanager.models.iterator.playerthrow.ThrowIterator
 import kotlinx.android.parcel.Parcelize
 import kotlin.jvm.Throws
 
 
-class Player(var name: String, val nbrRounds: Int) : Parcelable {
+class Player(
+    @ColumnInfo var name: String,
+    private val maxMove: Int) : Parcelable {
 
-    private val throws: MutableList<ThrowIterator> = MutableList(nbrRounds) { ThrowIterator() }
-
+    @ColumnInfo private var moves: MutableList<Move> = mutableListOf()
     private var currentThrows: Int = 0
 
     constructor(parcel: Parcel) : this(
@@ -21,10 +22,11 @@ class Player(var name: String, val nbrRounds: Int) : Parcelable {
     ) {
     }
 
-
-    fun getThrows() : MutableList<ThrowIterator> {
-        return this.throws
+    fun resetAll() {
+        currentThrows = 0
+        moves.removeAll { true }
     }
+
 
     fun formatCurrentThrowsIndex() : String {
         return "${currentThrows + 1} throw"
@@ -34,23 +36,22 @@ class Player(var name: String, val nbrRounds: Int) : Parcelable {
         return currentThrows + 1
     }
 
-    fun resetThrow(){
-        currentThrows = 0
-    }
+    fun addMove(move: Move) : Boolean {
+        if (moves.size == maxMove)
+            return false
 
-    fun addMove(move: Move) {
-        throws[currentThrows].addItem(com.esgi.scoremanager.models.iterator.playerthrow.Throws(move))
-        if (!move.canRepeat()){
-            currentThrows = 2
-            return
+        if (moves.size > 0) {
+            if (!moves[0].canRepeat() || !move.canRepeat()) {
+                return false
+            }
         }
-        currentThrows += 1
 
+        moves.add(move)
+        return true
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeInt(nbrRounds)
     }
 
     override fun describeContents(): Int {
@@ -58,7 +59,7 @@ class Player(var name: String, val nbrRounds: Int) : Parcelable {
     }
 
     override fun toString(): String {
-        return "Player(name='$name', nbrRounds=$nbrRounds, throws=$throws, currentThrows=$currentThrows)"
+        return "Player(name='$name', currentThrows=$currentThrows)"
     }
 
     companion object CREATOR : Parcelable.Creator<Player> {

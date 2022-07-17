@@ -29,7 +29,7 @@ class GameSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bowling.addEntity(Player("", nbrRounds = bowling.maxRounds))
+        bowling.addEntity(Player("", maxMove = bowling.maxRounds))
         view.recycler_player.layoutManager = LinearLayoutManager(requireContext())
         val adapter = CustomAdapter(bowling)
         view.recycler_player.adapter = adapter
@@ -38,7 +38,7 @@ class GameSetupFragment : Fragment() {
         val continueBtn = view.continue_btn
 
         addPlayerBtn.setOnClickListener {
-            bowling.addEntity(Player("", bowling.maxRounds))
+            bowling.addEntity(Player("", maxMove = bowling.maxRounds))
             adapter.notifyDataSetChanged()
 
         }

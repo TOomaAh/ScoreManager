@@ -8,9 +8,11 @@ import kotlinx.android.parcel.Parcelize
 
 interface Iterator : Parcelable{
     fun hasNext() : Boolean
-    fun getNext() : IteratorITem?
-    fun addItem(item: IteratorITem)
-    fun get(index: Int) : IteratorITem?
+    fun getNext() : Rounds?
+    fun addItem(item: Rounds)
+    fun getCurrent() : Rounds?
+    fun isLast() : Boolean
+    fun toList() : List<Rounds?>
     fun reset()
     override fun writeToParcel(parcel: Parcel, flags: Int)
 }

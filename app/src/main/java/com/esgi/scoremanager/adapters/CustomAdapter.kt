@@ -50,7 +50,6 @@ class CustomAdapter(private val bowling : SportBuilder) : RecyclerView.Adapter<C
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 bowling.entities[position].name = viewHolder.playerNameInput.text.toString()
-                Log.d("TAG", "onTextChanged: ${bowling.entities[position]}")
             }
 
             override fun afterTextChanged(s: Editable?) {}
