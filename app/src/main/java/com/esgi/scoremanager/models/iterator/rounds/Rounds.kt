@@ -117,19 +117,6 @@ class RoundListConverter {
                 rounds.add(Rounds(round.players, round.currentPlayerIndex))
             }
         }
-
-
-        /*for (r in 0 until json.length()) {
-            val roundJson = json.getJSONArray(r)
-            val playersJson = roundJson.getJSONArray(r)
-            val players: MutableList<Player> = mutableListOf()
-            val playerConverter = PlayerConverter()
-            for (i in 0 until playersJson.length()) {
-                val jsonObject = playersJson.getJSONObject(i)
-                players.add(playerConverter.ConvertPlayer(jsonObject.toString())!!)
-            }
-            rounds.add(Rounds(players, 0))
-        }*/
         return rounds
     }
 }

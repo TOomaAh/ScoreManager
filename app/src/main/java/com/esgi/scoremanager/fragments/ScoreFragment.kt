@@ -20,6 +20,9 @@ import com.esgi.scoremanager.models.move.Strike
 import com.esgi.scoremanager.models.sport.Bowling
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 import kotlin.math.log
 
 class ScoreFragment : Fragment() {
@@ -77,10 +80,11 @@ class ScoreFragment : Fragment() {
         }
         if (bowling?.rounds!!.isLast() && round.currentPlayerIndex == round.players.size - 1){
             val game : Game = Game(
-                id         = 0,
-                name       = bowling?.name!!,
-                rounds     = bowling?.rounds!!.toList(),
-                players    = bowling?.entities!!
+                id          = 0,
+                name        = bowling?.name!!,
+                date        = LocalDateTime.now(),
+                rounds      = bowling?.rounds!!.toList(),
+                players     = bowling?.entities!!
             )
             val action =  ScoreFragmentDirections.actionScoreFragmentToGameRecapFragment(game)
             findNavController().navigate(action)

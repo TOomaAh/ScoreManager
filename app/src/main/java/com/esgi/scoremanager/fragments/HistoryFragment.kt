@@ -14,6 +14,7 @@ import com.esgi.scoremanager.room.GameRoomDatabase
 import kotlinx.android.synthetic.main.fragment_game_recap.view.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -38,10 +39,16 @@ class HistoryFragment : Fragment() {
 
 
         view.history_score_recycler.layoutManager = LinearLayoutManager(requireContext())
+
+
         GlobalScope.launch {
             val games = repository.getAll()
-            val adapter = HistoryAdapter(games)
-            view.history_score_recycler.adapter = adapter
+
+            GlobalScope.launch(Dispatchers.Main.immediate) {
+                val adapter = HistoryAdapter(games)
+                view.history_score_recycler.adapter = adapter
+            }
+
 
         }
 

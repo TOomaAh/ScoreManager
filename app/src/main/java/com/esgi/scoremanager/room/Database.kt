@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.esgi.scoremanager.models.DateConverter
 import com.esgi.scoremanager.models.Game
 import com.esgi.scoremanager.models.MoveConverter
 import com.esgi.scoremanager.models.entities.PlayerConverter
@@ -14,8 +15,13 @@ import com.esgi.scoremanager.models.iterator.rounds.RoundListConverter
 import com.esgi.scoremanager.models.sport.Bowling
 
 
-@Database(entities = [Game::class], version = 1, exportSchema = false)
-@TypeConverters(RoundConverter::class, RoundListConverter::class, PlayerListConverter::class, PlayerConverter::class)
+@Database(entities = [Game::class], version = 2, exportSchema = false)
+@TypeConverters(RoundConverter::class,
+    RoundListConverter::class,
+    PlayerListConverter::class,
+    PlayerConverter::class,
+    DateConverter::class
+)
 abstract class GameRoomDatabase : RoomDatabase() {
 
     abstract fun bowlingDao(): GameRoomDao
@@ -34,7 +40,9 @@ abstract class GameRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     GameRoomDatabase::class.java,
                     "word_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 // return instance
                 instance

@@ -10,19 +10,22 @@ import com.esgi.scoremanager.models.entities.Player
 import com.esgi.scoremanager.models.iterator.rounds.RoundConverter
 import com.esgi.scoremanager.models.iterator.rounds.Rounds
 import com.esgi.scoremanager.models.sport.Sport
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
 class Game(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo val name: String,
-    @TypeConverters(RoundConverter::class)
+    @ColumnInfo val date: LocalDateTime,
     @ColumnInfo val rounds: List<Rounds?>,
     @ColumnInfo val players: List<Player>) : Parcelable{
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
+        parcel.readSerializable() as LocalDateTime,
         parcel.createTypedArrayList(Rounds)!!,
         parcel.createTypedArrayList(Player)!!
     ) {
@@ -33,6 +36,7 @@ class Game(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
+        parcel.writeSerializable(date)
         parcel.writeTypedList(rounds)
         parcel.writeTypedList(players)
     }
