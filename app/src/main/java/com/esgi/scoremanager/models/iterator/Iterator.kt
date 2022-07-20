@@ -13,6 +13,5 @@ interface Iterator : Parcelable{
     fun getCurrent() : Rounds?
     fun isLast() : Boolean
     fun toList() : List<Rounds?>
-    fun reset()
     override fun writeToParcel(parcel: Parcel, flags: Int)
 }

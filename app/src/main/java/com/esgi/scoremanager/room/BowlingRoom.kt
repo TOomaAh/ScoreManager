@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.esgi.scoremanager.models.Game
 
 @Dao
-interface GameRoom {
+interface GameRoomDao {
 
     @Query("SELECT * FROM game")
     fun getAll() : List<Game>

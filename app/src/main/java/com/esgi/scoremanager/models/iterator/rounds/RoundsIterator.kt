@@ -19,7 +19,6 @@ class RoundsIterator(private val maxRounds: Int):
     }
 
     override fun isLast(): Boolean {
-        Log.d("TAG", "isLast: index => $index | max => $maxRounds == ${index == maxRounds - 1}")
         return index == maxRounds - 1
     }
 
@@ -43,18 +42,13 @@ class RoundsIterator(private val maxRounds: Int):
         return rounds[index]
     }
 
-    override fun reset() {
-        this.index = 0
-    }
-
     override fun addItem(item: Rounds) {
-        val rounds: Rounds = item
-        if (this.rounds[0] == null){
-            this.rounds[0] = rounds
-            return
+        if (this.rounds[0] != null){
+            index += 1
         }
-        index += 1
-        this.rounds[index] = rounds
+        this.rounds[index] = Rounds(item.players)
+
+
 
     }
 

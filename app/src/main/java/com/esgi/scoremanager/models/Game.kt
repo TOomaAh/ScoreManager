@@ -5,7 +5,9 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.esgi.scoremanager.models.entities.Player
+import com.esgi.scoremanager.models.iterator.rounds.RoundConverter
 import com.esgi.scoremanager.models.iterator.rounds.Rounds
 import com.esgi.scoremanager.models.sport.Sport
 import java.util.*
@@ -14,6 +16,7 @@ import java.util.*
 class Game(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo val name: String,
+    @TypeConverters(RoundConverter::class)
     @ColumnInfo val rounds: List<Rounds?>,
     @ColumnInfo val players: List<Player>) : Parcelable{
 

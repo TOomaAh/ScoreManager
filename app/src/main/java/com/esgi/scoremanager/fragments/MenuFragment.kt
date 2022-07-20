@@ -26,5 +26,10 @@ class MenuFragment : Fragment() {
             val action = MenuFragmentDirections.actionMenuFragmentToGameSetupFragment()
             findNavController().navigate(action)
         }
+
+        view.history_game_button.setOnClickListener {
+            val action = MenuFragmentDirections.actionMenuFragmentToHistoryFragment()
+            findNavController().navigate(action)
+        }
     }
 }

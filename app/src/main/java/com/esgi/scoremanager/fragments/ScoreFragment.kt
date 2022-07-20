@@ -15,10 +15,9 @@ import com.esgi.scoremanager.models.Game
 import com.esgi.scoremanager.models.Move
 import com.esgi.scoremanager.models.entities.Player
 import com.esgi.scoremanager.models.iterator.rounds.Rounds
-import com.esgi.scoremanager.models.iterator.rounds.RoundsIterator
+import com.esgi.scoremanager.models.move.Spare
 import com.esgi.scoremanager.models.move.Strike
 import com.esgi.scoremanager.models.sport.Bowling
-import com.esgi.scoremanager.room.GameDatabase
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
 import kotlin.math.log
@@ -26,7 +25,6 @@ import kotlin.math.log
 class ScoreFragment : Fragment() {
 
     private var bowling : Bowling? = null
-    private var roundsIndex : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +38,9 @@ class ScoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bowling = ScoreFragmentArgs.fromBundle(requireArguments()).bowling.build() as Bowling
+        var round = Rounds(bowling!!.entities)
+        bowling?.addRound(round)
 
-        bowling?.addRound(Rounds(bowling?.entities!!))
-        val round : Rounds = bowling?.rounds?.getCurrent()!! as Rounds
         val player: Player = this.bowling?.entities?.get(round.currentPlayerIndex)!!
         player_str.text = player.name
 
@@ -54,7 +52,7 @@ class ScoreFragment : Fragment() {
         }
 
         spare_btn.setOnClickListener {
-            Log.d("PROUT", "SPARE")
+            play(Spare())
         }
 
         hole_btn.setOnClickListener {
@@ -65,41 +63,43 @@ class ScoreFragment : Fragment() {
     }
 
     private fun play(move: Move) {
+        val round : Rounds = bowling!!.rounds.getCurrent()!!
+        val player: Player = round.players[round.currentPlayerIndex]
+        val canAddMove = player.addMove(move)
 
-        var rounds: Rounds = bowling?.rounds?.getCurrent() as Rounds
-
-        if (bowling?.rounds!!.isLast() && rounds.currentPlayerIndex == rounds.players.size - 1){
-             val game : Game = Game(
-                 id         = 0,
-                 name       = bowling?.name!!,
-                 rounds     = bowling?.rounds!!.toList(),
-                 players    = bowling?.entities!!
+        if (!canAddMove) {
+            AlertDialog.Builder(this.context).setMessage("Cannot add move ! Total exceeded").setPositiveButton("Ok") { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }.show()
+            return
+        }else {
+            Log.d("NEWROUND", "play: $round")
+        }
+        if (bowling?.rounds!!.isLast() && round.currentPlayerIndex == round.players.size - 1){
+            val game : Game = Game(
+                id         = 0,
+                name       = bowling?.name!!,
+                rounds     = bowling?.rounds!!.toList(),
+                players    = bowling?.entities!!
             )
-            Log.d("TAG", "play: $game")
-
             val action =  ScoreFragmentDirections.actionScoreFragmentToGameRecapFragment(game)
             findNavController().navigate(action)
             return
 
 
         }
-        val player: Player = rounds.players[rounds.currentPlayerIndex]
-        Log.d("TAG", "play: ${player.name}")
-        val canAddMove = player.addMove(move)
-        if (!canAddMove) {
-            Log.d("TAG", "play: $canAddMove")
-            AlertDialog.Builder(this.context).setMessage("Cannot add move ! Total exceeded").setPositiveButton("Ok") { dialogInterface, i ->
-                dialogInterface.dismiss()
-            }
+
+        round.currentPlayerIndex += 1
+
+        if (round.currentPlayerIndex == round.players.size) {
+            Log.d("NEWROUND", "play: $round")
+            val newRound = Rounds(bowling!!.entities)
+            Log.d("EQUALS", "play: ${round.players.equals(newRound.players)}")
+            bowling?.addRound(newRound)
+            player_str.text = newRound.players[newRound.currentPlayerIndex].name
+        }else {
+            player_str.text = round.players[round.currentPlayerIndex].name
         }
 
-        rounds.currentPlayerIndex += 1
-
-        if (rounds.currentPlayerIndex == rounds.players.size) {
-
-            bowling?.rounds!!.addItem(Rounds(bowling?.entities!!))
-            rounds = bowling?.rounds?.getCurrent() as Rounds
-        }
-        player_str.text = rounds.players[rounds.currentPlayerIndex].name
     }
 }

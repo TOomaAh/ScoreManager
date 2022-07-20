@@ -1,5 +1,6 @@
 package com.esgi.scoremanager.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.esgi.scoremanager.models.Game
@@ -33,9 +34,6 @@ class RecapScoreAdapter(private val game : Game) : RecyclerView.Adapter<RecapSco
         holder.player_name_str.text = player.name
         var score : Int = 0
         for (round in game.rounds) {
-            val players : List<Player>? = round?.players?.filter {
-                it.name == player.name
-            }
             round?.players?.map {
                 if (it.name == player.name) {
                     it.moves.map {
@@ -49,7 +47,5 @@ class RecapScoreAdapter(private val game : Game) : RecyclerView.Adapter<RecapSco
     }
 
     override fun getItemCount(): Int = game.players.size
-
-
 
 }

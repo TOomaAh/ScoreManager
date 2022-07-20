@@ -35,5 +35,11 @@
         android:id="@+id/game_date_str"
         android:text="20/08/2022"
         />
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/ok_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
