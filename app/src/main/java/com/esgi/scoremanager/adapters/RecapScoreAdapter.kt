@@ -11,15 +11,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.models.entities.Player
+import kotlinx.android.synthetic.main.history_score_cell.view.*
 import kotlinx.android.synthetic.main.score_history_player.view.*
 
 class RecapScoreAdapter(private val game : Game) : RecyclerView.Adapter<RecapScoreAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val player_name_str: TextView = view.player_name_str
         val player_score_str: TextView = view.player_score_str
-
     }
 
 

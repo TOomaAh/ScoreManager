@@ -8,6 +8,7 @@ import androidx.room.TypeConverter
 import com.esgi.scoremanager.models.Move
 import com.esgi.scoremanager.models.MoveConverter
 import com.esgi.scoremanager.models.iterator.rounds.Rounds
+import com.esgi.scoremanager.models.move.Spare
 import kotlinx.android.parcel.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
@@ -50,12 +51,30 @@ class Player(
             return false
 
         if (moves.size > 0) {
+
+            if ((moves[0].points < 10 && move is Spare) || ((moves[0].points + move.points) == 10)) {
+                moves[0] = Spare()
+                currentThrows = this.maxMove
+                return true
+            }
+
             if (!moves[0].canRepeat() || !move.canRepeat()) {
                 return false
             }
+
+            if (moves[0].points + move.points > 10) {
+                return false
+            }
+
         }
 
         moves.add(move)
+        currentThrows += if (move.canRepeat()) {
+            1
+        } else {
+            this.maxMove
+        }
+
         return true
     }
 

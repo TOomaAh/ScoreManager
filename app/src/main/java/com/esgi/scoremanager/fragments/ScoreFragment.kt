@@ -3,10 +3,12 @@ package com.esgi.scoremanager.fragments
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,11 +17,13 @@ import com.esgi.scoremanager.models.Game
 import com.esgi.scoremanager.models.Move
 import com.esgi.scoremanager.models.entities.Player
 import com.esgi.scoremanager.models.iterator.rounds.Rounds
+import com.esgi.scoremanager.models.move.Other
 import com.esgi.scoremanager.models.move.Spare
 import com.esgi.scoremanager.models.move.Strike
 import com.esgi.scoremanager.models.sport.Bowling
 import kotlinx.android.synthetic.main.fragment_score.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
+import java.lang.Exception
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -41,7 +45,7 @@ class ScoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bowling = ScoreFragmentArgs.fromBundle(requireArguments()).bowling.build() as Bowling
-        var round = Rounds(bowling!!.entities)
+        val round = Rounds(bowling!!.entities)
         bowling?.addRound(round)
 
         val player: Player = this.bowling?.entities?.get(round.currentPlayerIndex)!!
@@ -59,7 +63,19 @@ class ScoreFragment : Fragment() {
         }
 
         hole_btn.setOnClickListener {
-            Log.d("PROUT", "HOLE")
+            val scoreText: EditText = EditText(this.context)
+            scoreText.inputType = InputType.TYPE_CLASS_NUMBER
+            val alertInput: AlertDialog.Builder = AlertDialog.Builder(this.context!!)
+                .setView(scoreText)
+                .setMessage("Score effectué")
+                .setPositiveButton("Ok") { dialogInterface, _ ->
+                    val score : Int = scoreText.text.toString().toInt()
+                    play(Other(score))
+                }.setNegativeButton("Cancel") { dialogInterface, _ ->
+                    dialogInterface.cancel()
+                }
+
+            alertInput.show()
         }
 
 
@@ -67,7 +83,7 @@ class ScoreFragment : Fragment() {
 
     private fun play(move: Move) {
         val round : Rounds = bowling!!.rounds.getCurrent()!!
-        val player: Player = round.players[round.currentPlayerIndex]
+        var player: Player = round.players[round.currentPlayerIndex]
         val canAddMove = player.addMove(move)
 
         if (!canAddMove) {
@@ -75,9 +91,8 @@ class ScoreFragment : Fragment() {
                 dialogInterface.dismiss()
             }.show()
             return
-        }else {
-            Log.d("NEWROUND", "play: $round")
         }
+
         if (bowling?.rounds!!.isLast() && round.currentPlayerIndex == round.players.size - 1){
             val game : Game = Game(
                 id          = 0,
@@ -93,17 +108,22 @@ class ScoreFragment : Fragment() {
 
         }
 
-        round.currentPlayerIndex += 1
+        if (player.getCurrentThrowsIndex() - 1 >= player.maxMove) {
+            round.currentPlayerIndex += 1
+        }
+
 
         if (round.currentPlayerIndex == round.players.size) {
             Log.d("NEWROUND", "play: $round")
             val newRound = Rounds(bowling!!.entities)
             Log.d("EQUALS", "play: ${round.players.equals(newRound.players)}")
             bowling?.addRound(newRound)
-            player_str.text = newRound.players[newRound.currentPlayerIndex].name
+            player = newRound.players[newRound.currentPlayerIndex]
         }else {
-            player_str.text = round.players[round.currentPlayerIndex].name
+            player = round.players[round.currentPlayerIndex]
         }
 
+        player_str.text = player.name
+        string_round.text = player.formatCurrentThrowsIndex()
     }
 }
