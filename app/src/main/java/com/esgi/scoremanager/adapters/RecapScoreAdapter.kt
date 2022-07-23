@@ -42,7 +42,7 @@ class RecapScoreAdapter(private val game : Game) : RecyclerView.Adapter<RecapSco
             }
         }
 
-        holder.player_score_str.text = "$score points"
+        holder.player_score_str.text = " $score points"
     }
 
     override fun getItemCount(): Int = game.players.size
