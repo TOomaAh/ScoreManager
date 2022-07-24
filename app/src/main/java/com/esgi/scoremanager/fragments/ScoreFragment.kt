@@ -53,7 +53,6 @@ class ScoreFragment : Fragment() {
 
         string_round.text = player.formatCurrentThrowsIndex()
 
-        view.recycler_score_grid.layoutManager = LinearLayoutManager(requireContext())
         strike_btn.setOnClickListener {
             play(Strike())
         }
@@ -62,13 +61,28 @@ class ScoreFragment : Fragment() {
             play(Spare())
         }
 
+        btn_game_back.setOnClickListener {
+            val alertDialog : AlertDialog.Builder = AlertDialog.Builder(this.context)
+                .setMessage("Are you sure ? Your game will not be saved")
+                .setPositiveButton("Yes") { _, _ ->
+                    bowling = null
+                    val action = ScoreFragmentDirections.actionScoreFragmentToMenuFragment()
+                    findNavController().navigate(action)
+                }.setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            alertDialog.show()
+
+        }
+
         hole_btn.setOnClickListener {
             val scoreText: EditText = EditText(this.context)
             scoreText.inputType = InputType.TYPE_CLASS_NUMBER
             val alertInput: AlertDialog.Builder = AlertDialog.Builder(this.context!!)
                 .setView(scoreText)
                 .setMessage("Score effectué")
-                .setPositiveButton("Ok") { dialogInterface, _ ->
+                .setPositiveButton("Ok") { _, _ ->
                     val score : Int = scoreText.text.toString().toInt()
                     play(Other(score))
                 }.setNegativeButton("Cancel") { dialogInterface, _ ->

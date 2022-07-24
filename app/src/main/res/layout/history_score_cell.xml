@@ -13,6 +13,8 @@
     app:cardBackgroundColor="@color/white"
     android:layout_height="wrap_content">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="407dp"
         android:layout_height="match_parent">

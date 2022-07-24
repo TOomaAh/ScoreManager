@@ -16,4 +16,10 @@ class GameRepository(private val gameRoomDao: GameRoomDao) {
     suspend fun insert(game: Game) {
         gameRoomDao.insertGame(game)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(game: Game) {
+        gameRoomDao.deleteGame(game)
+    }
 }

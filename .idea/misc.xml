@@ -17,14 +17,17 @@
         <entry key="..\:/Users/antoi/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/score_history_player.xml" value="0.28177083333333336" />
         <entry key="..\:/Users/brune/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/fragment_game_setup.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/brune/AndroidStudioProjects/ScoreManager/app/src/main/res/layout/item_player.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/drawable/button_bg.xml" value="0.1" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_game_recap.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_game_setup.xml" value="0.18541666666666667" />
-        <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_history.xml" value="0.21693840579710144" />
+        <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_history.xml" value="0.1" />
+        <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_menu.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/fragment_score.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/history_score_cell.xml" value="0.21693840579710144" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/item_player.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/item_score_number.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/layout/score_history_player.xml" value="0.25" />
+        <entry key="..\:/Users/brune/StudioProjects/ScoreManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_score.xml" value="0.2171875" />
       </map>
     </option>

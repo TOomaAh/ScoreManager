@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.scoremanager.R
 import com.esgi.scoremanager.adapters.HistoryAdapter
@@ -12,7 +13,9 @@ import com.esgi.scoremanager.adapters.RecapScoreAdapter
 import com.esgi.scoremanager.room.GameRepository
 import com.esgi.scoremanager.room.GameRoomDatabase
 import kotlinx.android.synthetic.main.fragment_game_recap.view.*
+import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
+import kotlinx.android.synthetic.main.fragment_menu.view.*
 import kotlinx.android.synthetic.main.fragment_score.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -35,6 +38,12 @@ class HistoryFragment : Fragment() {
         val database by lazy { GameRoomDatabase.getDatabase(this.context!!) }
         val repository by lazy { GameRepository(database.bowlingDao()) }
 
+        view.btn_history_back.setOnClickListener {
+            val action = HistoryFragmentDirections.actionHistoryFragmentToMenuFragment()
+            findNavController().navigate(action)
+        }
+
+
 
 
 
@@ -45,8 +54,12 @@ class HistoryFragment : Fragment() {
             val games = repository.getAll()
 
             GlobalScope.launch(Dispatchers.Main.immediate) {
-                val adapter = HistoryAdapter(games)
-                view.history_score_recycler.adapter = adapter
+                if (games.isEmpty()) {
+                    no_history.text = "No history found"
+                }else {
+                    val adapter = HistoryAdapter(games, repository)
+                    view.history_score_recycler.adapter = adapter
+                }
             }
 
 

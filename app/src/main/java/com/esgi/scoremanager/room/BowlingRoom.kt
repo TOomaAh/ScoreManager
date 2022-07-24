@@ -1,6 +1,7 @@
 package com.esgi.scoremanager.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.esgi.scoremanager.models.Game
@@ -16,4 +17,7 @@ interface GameRoomDao {
 
     @Insert
     fun insertGame(game: Game)
+
+    @Delete
+    fun deleteGame(game: Game)
 }

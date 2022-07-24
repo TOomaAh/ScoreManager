@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_gameSetupFragment_to_scoreFragment"
             app:destination="@id/scoreFragment" />
+        <action
+            android:id="@+id/action_gameSetupFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
@@ -33,6 +36,9 @@
         <action
             android:id="@+id/action_scoreFragment_to_gameRecapFragment"
             app:destination="@id/gameRecapFragment" />
+        <action
+            android:id="@+id/action_scoreFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameRecapFragment"
@@ -48,5 +54,9 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.esgi.scoremanager.fragments.HistoryFragment"
-        android:label="HistoryFragment" />
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
 </navigation>
